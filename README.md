@@ -2,13 +2,13 @@
 
 Chatbot that remembers your health conditions/allergies/preferences across
 sessions (via Mem0 + Qdrant) and tailors recipe suggestions accordingly
-(via OpenAI).
+
 
 ## Architecture
 ```
 main.py            -> CLI loop
 memory_manager.py   -> Mem0 wrapper (Mem0 uses Qdrant internally as vector store)
-recipe_agent.py      -> OpenAI call, builds prompt from retrieved facts
+recipe_agent.py      -> GEMINI AI call, builds prompt from retrieved facts
 ```
 
 ## Setup (do this in order)
@@ -68,19 +68,5 @@ Close the app, restart `python main.py`, ask for a spicy recipe again —
 it'll still remember your cholesterol without you repeating yourself. That
 persistence across sessions is the whole point of the project.
 
-## Known limitations (be upfront about these in interviews, don't hide them)
-- Single hardcoded user (`USER_ID` in main.py) — swap for real auth in a
-  production version.
-- No web search yet — recipes come from the LLM's own knowledge. Easy to
-  add: a `web_search.py` module that fetches candidate recipes, then feeds
-  them into `recipe_agent.py`'s prompt instead of "cook from scratch."
-- No conversation memory (short-term chat history) — only long-term facts.
-  Each turn is stateless except for what Mem0 retrieves.
 
-## Extending for your resume (do at least one of these)
-1. **Web search integration** — use Tavily or Serper API to fetch real
-   recipes, then have the LLM adapt them instead of generating from scratch.
-2. **Streamlit UI** — swap the CLI for a simple web interface (1-2 hours of
-   work, makes a much better demo video/screenshot for your resume).
-3. **Multi-user support** — real user_id from a login system instead of the
-   hardcoded string.
+
